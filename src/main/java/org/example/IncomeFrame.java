@@ -12,12 +12,13 @@ public class IncomeFrame extends JFrame {
     private final JLabel earningsPerSecondLabel;
     private double earningsPerSecond;
     private double totalEarningsThisMonth;
+    private final JProgressBar earningsProgressBar; // Added JProgressBar
 
     public IncomeFrame(double initialSalary) {
         setTitle("Earnings Calculator");
         setSize(500, 150);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setLayout(new GridLayout(3, 1));
+        setLayout(new GridLayout(4, 1));
 
         JLabel incomeLabel = new JLabel("Monthly Income: $" + initialSalary, SwingConstants.LEFT);
         add(incomeLabel);
@@ -28,6 +29,11 @@ public class IncomeFrame extends JFrame {
         earningsPerSecondLabel = new JLabel(" ", SwingConstants.LEFT); // I'm leaving without text because variable
         // "earningsPerSecondLabel" will be updated further in the  private void updateValues() method
         add(earningsPerSecondLabel);
+
+        // Adding the progress bar
+        earningsProgressBar = new JProgressBar(0, (int) initialSalary);
+        earningsProgressBar.setStringPainted(true);
+        add(earningsProgressBar);
 
         calculateEarningsPerSecond(initialSalary);
 
@@ -63,6 +69,9 @@ public class IncomeFrame extends JFrame {
         totalEarningsThisMonth += earningsPerSecond;
         DecimalFormat df = new DecimalFormat("#.#####");
         earningsPerSecondLabel.setText("Total earning up to now and counting: $" + df.format(totalEarningsThisMonth));
+
+        // Update progress bar value
+        earningsProgressBar.setValue((int) totalEarningsThisMonth);
     }
 
     public static void main(String[] args) {
